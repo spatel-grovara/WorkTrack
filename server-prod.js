@@ -446,59 +446,101 @@ app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
 app.use('/assets', express.static(path.join(__dirname, 'client/dist/assets')));
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
-// Direct access to specific CSS files
-app.get('/index-B_1pzkcs.css', (req, res) => {
-  // Try to find the CSS file in various locations
-  const possiblePaths = [
-    path.join(__dirname, 'client/dist/assets/index-B_1pzkcs.css'),
-    path.join(__dirname, 'public/assets/index-B_1pzkcs.css'),
-    path.join(__dirname, 'client/dist/index-B_1pzkcs.css'),
-    path.join(__dirname, 'public/index-B_1pzkcs.css')
-  ];
-  
-  for (const filePath of possiblePaths) {
-    if (existsSync(filePath)) {
-      console.log(`Serving CSS from: ${filePath}`);
-      return res.sendFile(filePath);
-    }
+// Serve our properly built styles.css file
+app.get('/styles.css', (req, res) => {
+  const stylesPath = path.join(__dirname, 'public/styles.css');
+  if (existsSync(stylesPath)) {
+    console.log('Serving primary styles.css file');
+    return res.sendFile(stylesPath);
   }
   
-  console.error('CSS file not found in any of the expected locations');
-  
-  // If we don't find the exact CSS file, look for any CSS file with a similar name pattern
+  // If the primary styles file doesn't exist, find any CSS file
+  console.log('Primary styles.css not found, looking for alternatives');
   let anyCssFile = null;
-  for (const staticPath of STATIC_PATHS) {
-    const assetsPath = path.join(staticPath, 'assets');
-    if (existsSync(assetsPath)) {
-      try {
-        const files = readdirSync(assetsPath);
-        for (const file of files) {
-          if (file.startsWith('index-') && file.endsWith('.css')) {
-            anyCssFile = path.join(assetsPath, file);
-            console.log(`Found alternative CSS file: ${anyCssFile}`);
-            break;
-          }
-        }
-      } catch (err) {
-        console.error(`Error reading directory ${assetsPath}:`, err);
-      }
-    }
+  
+  // Check in public directory first
+  try {
+    const publicCssFiles = readdirSync(path.join(__dirname, 'public'))
+      .filter(file => file.endsWith('.css'));
     
-    if (anyCssFile) break;
+    if (publicCssFiles.length > 0) {
+      anyCssFile = path.join(__dirname, 'public', publicCssFiles[0]);
+      console.log(`Found CSS file in public directory: ${publicCssFiles[0]}`);
+    }
+  } catch (err) {
+    console.error('Error reading public directory:', err);
+  }
+  
+  // If nothing found, check in assets directories
+  if (!anyCssFile) {
+    for (const staticPath of STATIC_PATHS) {
+      const assetsPath = path.join(staticPath, 'assets');
+      if (existsSync(assetsPath)) {
+        try {
+          const files = readdirSync(assetsPath);
+          for (const file of files) {
+            if (file.endsWith('.css')) {
+              anyCssFile = path.join(assetsPath, file);
+              console.log(`Found alternative CSS file: ${file}`);
+              break;
+            }
+          }
+        } catch (err) {
+          console.error(`Error reading directory ${assetsPath}:`, err);
+        }
+      }
+      
+      if (anyCssFile) break;
+    }
   }
   
   if (anyCssFile) {
     return res.sendFile(anyCssFile);
   }
   
-  // Final fallback to raw CSS
-  const rawCssPath = path.join(__dirname, 'public/raw-index.css');
-  if (existsSync(rawCssPath)) {
-    console.log('Falling back to raw CSS file');
-    return res.sendFile(rawCssPath);
-  }
-  
-  res.status(404).send('CSS file not found');
+  // Last resort: generate CSS on the fly
+  console.log('No CSS files found, generating minimal CSS');
+  res.setHeader('Content-Type', 'text/css');
+  res.send(`
+    /* Generated minimal CSS */
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+      color: #0f172a;
+      background-color: #f8fafc;
+    }
+    
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      border: 1px solid #e2e8f0;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .btn-primary {
+      background-color: #3b82f6;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+  `);
 });
 
 // Check if directories exist and use them with cache disabled
@@ -544,12 +586,10 @@ app.get('*', (req, res) => {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WorkTrack - Time Tracking App</title>
-        <!-- Multiple paths to find the CSS -->
-        <link rel="stylesheet" href="/assets/index-B_1pzkcs.css" />
-        <link rel="stylesheet" href="/index-B_1pzkcs.css" />
-        <!-- Fallback CSS -->
-        <link rel="stylesheet" href="/raw-index.css" />
-        <link rel="stylesheet" href="/tailwind-directives.css" />
+        <!-- Primary CSS file produced by Tailwind CLI -->
+        <link rel="stylesheet" href="/styles.css" />
+        <!-- Fallback CSS options -->
+        <link rel="stylesheet" href="/assets/index.css" />
         <style>
           /* Base styles as fallback */
           *, *::before, *::after { box-sizing: border-box; }
