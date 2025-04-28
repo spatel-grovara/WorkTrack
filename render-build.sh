@@ -40,6 +40,30 @@ if [ ! -f client/dist/index.html ]; then
   cp client/index.html client/dist/
 fi
 
+# Step 5: Create a public directory to copy static assets
+echo "Setting up static assets..."
+mkdir -p public
+cp -R client/dist/* public/
+
+# Create a production-ready index.html that includes proper styling
+cat > public/index.html <<EOL
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WorkTrack - Time Tracking App</title>
+    <link rel="stylesheet" href="/assets/index-DaUGtDKE.css" />
+    <script type="module" crossorigin src="/assets/index-CgKx52Zi.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+EOL
+
+echo "Static assets setup complete"
+
 # Set execute permissions for run.js
 chmod +x run.js
 

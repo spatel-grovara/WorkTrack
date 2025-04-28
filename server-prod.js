@@ -3,6 +3,7 @@ import express from 'express';
 import { createServer } from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
@@ -370,12 +371,56 @@ app.get('/api/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// Static files
-app.use(express.static(CLIENT_PATH));
+// Static files - try multiple paths
+const STATIC_PATHS = [
+  path.join(__dirname, 'client/dist'),
+  path.join(__dirname, 'public'),
+  path.join(__dirname, 'client/public')
+];
+
+// Check if directories exist and use them
+for (const staticPath of STATIC_PATHS) {
+  if (existsSync(staticPath)) {
+    console.log(`Serving static files from: ${staticPath}`);
+    app.use(express.static(staticPath));
+  }
+}
 
 // Always return the main index.html for React routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(CLIENT_PATH, 'index.html'));
+  // Try multiple index.html locations
+  for (const staticPath of STATIC_PATHS) {
+    const indexPath = path.join(staticPath, 'index.html');
+    if (existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
+  }
+  
+  // Fallback - generate a basic HTML page
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WorkTrack - Time Tracking App</title>
+        <style>
+          body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; }
+          .container { max-width: 600px; margin: 0 auto; padding: 2rem; }
+          h1 { color: #3b82f6; }
+        </style>
+      </head>
+      <body>
+        <div id="root">
+          <div class="container">
+            <h1>WorkTrack</h1>
+            <p>The application is running, but the static assets couldn't be located.</p>
+            <p>Try redeploying the application.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `);
 });
 
 // Error handler
