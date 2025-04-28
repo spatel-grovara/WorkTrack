@@ -45,12 +45,11 @@ echo "Setting up static assets..."
 mkdir -p public
 cp -R client/dist/* public/
 
-# Step 6: Make sure modern UI CSS is copied to output folders
-echo "Copying modern UI CSS files to output folders..."
+# Step 6: Ensure all assets are available in both client/dist and public
+echo "Ensuring all assets are properly available..."
 mkdir -p client/dist
 mkdir -p public
-cp client/dist/modern-ui.css client/dist/
-cp public/modern-ui.css public/
+# Just ensure directories exist, we're using the Vite-generated CSS directly
 
 echo "Static assets setup complete"
 

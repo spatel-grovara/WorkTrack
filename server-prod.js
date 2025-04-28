@@ -427,9 +427,7 @@ app.get('*', (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WorkTrack - Time Tracking App</title>
         <!-- Original app CSS -->
-        <link rel="stylesheet" href="/assets/index-DaUGtDKE.css" />
-        <!-- Modern UI styling -->
-        <link rel="stylesheet" href="/modern-ui.css" />
+        <link rel="stylesheet" href="/assets/index-B_1pzkcs.css" />
         <style>
           /* Base styles as fallback */
           *, *::before, *::after { box-sizing: border-box; }
@@ -474,26 +472,7 @@ app.get('*', (req, res) => {
         </style>
         <script>
           window.addEventListener('load', function() {
-            // Dynamically add link to CSS
-            const modernUI = document.createElement('link');
-            modernUI.rel = 'stylesheet';
-            modernUI.href = '/modern-ui.css';
-            document.head.appendChild(modernUI);
-            
-            // Check if the CSS loaded successfully
-            modernUI.onload = function() {
-              console.log('Modern UI CSS loaded successfully');
-            };
-            
-            modernUI.onerror = function() {
-              console.error('Failed to load Modern UI CSS');
-              
-              // Try the direct CSS link as backup
-              const backupCSS = document.createElement('link');
-              backupCSS.rel = 'stylesheet';
-              backupCSS.href = '/assets/index-DaUGtDKE.css';
-              document.head.appendChild(backupCSS);
-            };
+            // No need to dynamically add CSS - we're using the correct stylesheet directly
             
             // Check if the script is loaded
             const scripts = ['/assets/index-CgKx52Zi.js'];
