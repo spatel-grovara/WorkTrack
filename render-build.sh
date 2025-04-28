@@ -1,23 +1,17 @@
 #!/bin/bash
 
-# Install dependencies
+# Install root dependencies first
+echo "Installing root dependencies..."
 npm install
 
-# Create client build directory
-mkdir -p dist/client
-
-# Build frontend using Vite
-echo "Building frontend..."
+# Build client
+echo "Building client..."
 cd client
-npx vite build
+npm run build
 cd ..
 
-# Copy built client files
-echo "Copying client files..."
-cp -r client/dist/* dist/client/
+# Compile TypeScript files
+echo "Compiling TypeScript..."
+npx tsc
 
-# Build server
-echo "Building server..."
-echo "// This is a placeholder server build" > dist/index.js
-
-echo "Build completed!"
+echo "Build process completed!"
