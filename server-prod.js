@@ -417,7 +417,7 @@ app.get('*', (req, res) => {
     return res.sendFile(customTemplatePath);
   }
   
-  // Fallback - generate a basic HTML page with inline styles
+  // Fallback - generate a basic HTML page
   console.log('No index.html found, sending generated HTML');
   res.send(`
     <!DOCTYPE html>
@@ -426,7 +426,12 @@ app.get('*', (req, res) => {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WorkTrack - Time Tracking App</title>
+        <!-- Original app CSS -->
+        <link rel="stylesheet" href="/assets/index-DaUGtDKE.css" />
+        <!-- Modern UI styling -->
+        <link rel="stylesheet" href="/modern-ui.css" />
         <style>
+          /* Base styles as fallback */
           *, *::before, *::after { box-sizing: border-box; }
           body { 
             margin: 0; 
@@ -436,86 +441,84 @@ app.get('*', (req, res) => {
             color: #0f172a;
           }
           
-          :root {
-            --primary: #3b82f6;
-            --primary-foreground: #ffffff;
-            --secondary: #f1f5f9;
-            --secondary-foreground: #0f172a;
-            --background: #ffffff;
-            --foreground: #0f172a;
-            --border: #e2e8f0;
-          }
-          
-          .layout { display: flex; flex-direction: column; min-height: 100vh; }
-          .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-          header { background-color: var(--background); border-bottom: 1px solid var(--border); padding: 1rem 0; }
-          .card { 
-            background-color: var(--background);
+          /* Layout components */
+          .card {
+            background-color: white;
             border-radius: 0.5rem;
-            border: 1px solid var(--border);
+            border: 1px solid #e2e8f0;
             padding: 1.5rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-bottom: 1rem;
           }
           
-          /* Button styles */
-          .button {
+          /* Buttons */
+          .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             border-radius: 0.5rem;
             font-weight: 500;
             padding: 0.5rem 1rem;
-            background-color: var(--primary);
-            color: var(--primary-foreground);
+            background-color: #3b82f6;
+            color: white;
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
           }
           
-          .button:hover { background-color: #2563eb; }
-          .success { color: #22c55e; }
-          .warning { color: #f59e0b; }
-          .danger { color: #ef4444; }
-          
-          h1, h2, h3 { margin-bottom: 1rem; }
-          p { margin-bottom: 1rem; }
+          .btn:hover { background-color: #2563eb; }
+
+          /* Header and containers */
+          .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+          header { background-color: white; border-bottom: 1px solid #e2e8f0; padding: 1rem 0; }
         </style>
         <script>
           window.addEventListener('load', function() {
-            // Dynamic script loading
-            const scripts = ['/assets/index-CgKx52Zi.js', '/assets/index.es-ClsAZ7Qr.js'];
+            // Dynamically add link to CSS
+            const modernUI = document.createElement('link');
+            modernUI.rel = 'stylesheet';
+            modernUI.href = '/modern-ui.css';
+            document.head.appendChild(modernUI);
+            
+            // Check if the CSS loaded successfully
+            modernUI.onload = function() {
+              console.log('Modern UI CSS loaded successfully');
+            };
+            
+            modernUI.onerror = function() {
+              console.error('Failed to load Modern UI CSS');
+              
+              // Try the direct CSS link as backup
+              const backupCSS = document.createElement('link');
+              backupCSS.rel = 'stylesheet';
+              backupCSS.href = '/assets/index-DaUGtDKE.css';
+              document.head.appendChild(backupCSS);
+            };
+            
+            // Check if the script is loaded
+            const scripts = ['/assets/index-CgKx52Zi.js'];
             scripts.forEach(src => {
               const script = document.createElement('script');
               script.type = 'module';
               script.src = src;
               document.body.appendChild(script);
             });
-            
-            // Dynamic CSS loading
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = '/assets/index-DaUGtDKE.css';
-            document.head.appendChild(link);
           });
         </script>
       </head>
       <body>
         <div id="root">
-          <div class="layout">
-            <header>
-              <div class="container">
-                <h1>WorkTrack</h1>
-              </div>
-            </header>
-            <main class="container" style="padding-top: 2rem;">
-              <div class="card">
-                <h2>Loading Application...</h2>
-                <p>If the application doesn't appear shortly, try refreshing the page.</p>
-                <p>The server is running correctly, but there might be an issue with loading assets.</p>
-              </div>
-            </main>
-          </div>
+          <header>
+            <div class="container">
+              <h1>WorkTrack</h1>
+            </div>
+          </header>
+          <main class="container" style="padding-top: 2rem;">
+            <div class="card">
+              <h2>Loading Application...</h2>
+              <p>If the application doesn't appear shortly, try refreshing the page.</p>
+            </div>
+          </main>
         </div>
       </body>
     </html>

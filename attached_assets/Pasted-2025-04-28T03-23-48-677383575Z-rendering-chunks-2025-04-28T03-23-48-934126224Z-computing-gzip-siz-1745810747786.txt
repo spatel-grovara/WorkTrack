@@ -1,0 +1,52 @@
+2025-04-28T03:23:48.677383575Z rendering chunks...
+2025-04-28T03:23:48.934126224Z computing gzip size...
+2025-04-28T03:23:48.957713036Z dist/index.html                            0.63 kB │ gzip:   0.38 kB
+2025-04-28T03:23:48.957751416Z dist/assets/index-DaUGtDKE.css             1.86 kB │ gzip:   0.66 kB
+2025-04-28T03:23:48.957828558Z dist/assets/purify.es-Bf0oSh3b.js         21.75 kB │ gzip:   8.57 kB
+2025-04-28T03:23:48.95792601Z dist/assets/index.es-ClsAZ7Qr.js         158.61 kB │ gzip:  53.07 kB
+2025-04-28T03:23:48.958018922Z dist/assets/html2canvas.esm-CBrSDip1.js  202.30 kB │ gzip:  48.03 kB
+2025-04-28T03:23:48.958025012Z dist/assets/index-CgKx52Zi.js            899.62 kB │ gzip: 281.41 kB
+2025-04-28T03:23:48.958166035Z 
+2025-04-28T03:23:48.958172855Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2025-04-28T03:23:48.958175455Z - Using dynamic import() to code-split the application
+2025-04-28T03:23:48.958177845Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2025-04-28T03:23:48.958192256Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2025-04-28T03:23:48.958376279Z ✓ built in 4.52s
+2025-04-28T03:23:49.029571735Z Checking for client/dist directory...
+2025-04-28T03:23:49.031170957Z Setting up static assets...
+2025-04-28T03:23:49.03568757Z Applying CSS and styling fixes...
+2025-04-28T03:23:49.039421856Z Generating Tailwind CSS content...
+2025-04-28T03:23:49.600469335Z Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+2025-04-28T03:23:49.600488485Z   npx update-browserslist-db@latest
+2025-04-28T03:23:49.600491865Z   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2025-04-28T03:23:49.625010116Z 
+2025-04-28T03:23:49.625029637Z Rebuilding...
+2025-04-28T03:23:50.168952106Z 
+2025-04-28T03:23:50.169116569Z Done in 571ms.
+2025-04-28T03:23:50.193549179Z Creating production CSS bundle...
+2025-04-28T03:23:50.195305854Z Setting up client CSS bundle for production...
+2025-04-28T03:23:50.19851819Z Creating styled index.html...
+2025-04-28T03:23:50.204566254Z CSS styling fixes applied!
+2025-04-28T03:23:50.204822139Z Static assets setup complete
+2025-04-28T03:23:50.206156246Z Build completed successfully!
+2025-04-28T03:23:54.297626147Z ==> Uploading build...
+2025-04-28T03:24:02.882249552Z ==> Uploaded in 5.9s. Compression took 2.7s
+2025-04-28T03:24:02.919135786Z ==> Build successful 🎉
+2025-04-28T03:24:04.844227403Z ==> Deploying...
+2025-04-28T03:24:25.541524085Z ==> Running 'node run.js'
+2025-04-28T03:24:25.941797101Z Starting the production server...
+2025-04-28T03:24:29.933920716Z Serving static files from: /opt/render/project/src/client/dist
+2025-04-28T03:24:29.934258573Z Serving static files from: /opt/render/project/src/public
+2025-04-28T03:24:29.934344155Z Serving static files from: /opt/render/project/src
+2025-04-28T03:24:29.937322498Z Server running on port 10000
+2025-04-28T03:24:30.743246175Z Connected to MongoDB
+2025-04-28T03:24:35.500524051Z ==> Your service is live 🎉
+2025-04-28T03:24:35.531367868Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:24:44.803645229Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:24:45.24642388Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:24:45.635434277Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:24:45.96543651Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:24:49.759181886Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:24:55.273198912Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:25:20.967508634Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:25:26.687560594Z Serving index.html from: /opt/render/project/src/client/dist/index.html

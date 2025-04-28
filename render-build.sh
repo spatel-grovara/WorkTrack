@@ -45,10 +45,12 @@ echo "Setting up static assets..."
 mkdir -p public
 cp -R client/dist/* public/
 
-# Step 6: Apply all CSS styling fixes
-echo "Applying CSS and styling fixes..."
-chmod +x fix-styles.sh
-./fix-styles.sh
+# Step 6: Make sure modern UI CSS is copied to output folders
+echo "Copying modern UI CSS files to output folders..."
+mkdir -p client/dist
+mkdir -p public
+cp client/dist/modern-ui.css client/dist/
+cp public/modern-ui.css public/
 
 echo "Static assets setup complete"
 

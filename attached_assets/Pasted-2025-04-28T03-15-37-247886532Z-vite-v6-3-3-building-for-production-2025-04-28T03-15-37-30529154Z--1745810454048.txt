@@ -1,0 +1,50 @@
+2025-04-28T03:15:37.247886532Z vite v6.3.3 building for production...
+2025-04-28T03:15:37.30529154Z transforming...
+2025-04-28T03:15:41.232004451Z ✓ 2265 modules transformed.
+2025-04-28T03:15:41.485982877Z rendering chunks...
+2025-04-28T03:15:41.746965741Z computing gzip size...
+2025-04-28T03:15:41.770916819Z dist/index.html                            0.63 kB │ gzip:   0.38 kB
+2025-04-28T03:15:41.770979351Z dist/assets/index-DaUGtDKE.css             1.86 kB │ gzip:   0.66 kB
+2025-04-28T03:15:41.771086153Z dist/assets/purify.es-Bf0oSh3b.js         21.75 kB │ gzip:   8.57 kB
+2025-04-28T03:15:41.771217826Z dist/assets/index.es-ClsAZ7Qr.js         158.61 kB │ gzip:  53.07 kB
+2025-04-28T03:15:41.771337098Z dist/assets/html2canvas.esm-CBrSDip1.js  202.30 kB │ gzip:  48.03 kB
+2025-04-28T03:15:41.771370679Z dist/assets/index-CgKx52Zi.js            899.62 kB │ gzip: 281.41 kB
+2025-04-28T03:15:41.771482221Z 
+2025-04-28T03:15:41.771486542Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2025-04-28T03:15:41.771489651Z - Using dynamic import() to code-split the application
+2025-04-28T03:15:41.771493182Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2025-04-28T03:15:41.771506332Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2025-04-28T03:15:41.771750447Z ✓ built in 4.50s
+2025-04-28T03:15:41.842732932Z Checking for client/dist directory...
+2025-04-28T03:15:41.844319046Z Setting up static assets...
+2025-04-28T03:15:41.849015175Z Applying CSS and styling fixes...
+2025-04-28T03:15:41.853061951Z Generating Tailwind CSS content...
+2025-04-28T03:15:42.425322387Z Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+2025-04-28T03:15:42.425340467Z   npx update-browserslist-db@latest
+2025-04-28T03:15:42.425343537Z   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2025-04-28T03:15:42.45236224Z 
+2025-04-28T03:15:42.452386541Z Rebuilding...
+2025-04-28T03:15:43.071440779Z 
+2025-04-28T03:15:43.071555041Z Done in 649ms.
+2025-04-28T03:15:43.100026025Z Creating production CSS bundle...
+2025-04-28T03:15:43.101789762Z Setting up client CSS bundle for production...
+2025-04-28T03:15:43.105126143Z Creating styled index.html...
+2025-04-28T03:15:43.111349805Z CSS styling fixes applied!
+2025-04-28T03:15:43.111659652Z Static assets setup complete
+2025-04-28T03:15:43.112875537Z Build completed successfully!
+2025-04-28T03:15:44.19007427Z ==> Uploading build...
+2025-04-28T03:15:54.273681797Z ==> Uploaded in 7.5s. Compression took 2.6s
+2025-04-28T03:15:54.315698888Z ==> Build successful 🎉
+2025-04-28T03:16:21.808464311Z ==> Deploying...
+2025-04-28T03:16:45.236852236Z ==> Running 'node run.js'
+2025-04-28T03:16:45.447794174Z Starting the production server...
+2025-04-28T03:16:49.644898047Z Serving static files from: /opt/render/project/src/client/dist
+2025-04-28T03:16:49.645371072Z Serving static files from: /opt/render/project/src/public
+2025-04-28T03:16:49.646197714Z Serving static files from: /opt/render/project/src
+2025-04-28T03:16:49.649396302Z Server running on port 10000
+2025-04-28T03:16:50.549872399Z Connected to MongoDB
+2025-04-28T03:16:52.421260264Z ==> Your service is live 🎉
+2025-04-28T03:16:56.63676489Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:17:26.395595208Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:17:30.876101797Z Serving index.html from: /opt/render/project/src/client/dist/index.html
+2025-04-28T03:17:51.545540877Z Serving index.html from: /opt/render/project/src/client/dist/index.html
