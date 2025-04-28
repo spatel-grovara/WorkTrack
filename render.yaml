@@ -2,8 +2,8 @@ services:
   - type: web
     name: worktrack
     env: node
-    buildCommand: npm install
-    startCommand: npx tsx server/index.ts
+    buildCommand: bash ./render-build.sh
+    startCommand: node run.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

@@ -1,0 +1,70 @@
+2025-04-28T01:51:58.211142978Z ==> It looks like we don't have access to your repo, but we'll try to clone it anyway.
+2025-04-28T01:51:58.211175539Z ==> Cloning from https://github.com/spatel-grovara/WorkTrack
+2025-04-28T01:51:58.362756761Z ==> Checking out commit dcd5f1168da7d7b444af642acd2e686dbb7f8622 in branch main
+2025-04-28T01:52:00.276381923Z ==> Using Node.js version 22.14.0 (default)
+2025-04-28T01:52:00.30168615Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-04-28T01:52:02.15058416Z ==> Using Bun version 1.1.0 (default)
+2025-04-28T01:52:02.15060091Z ==> Docs on specifying a bun version: https://render.com/docs/bun-version
+2025-04-28T01:52:02.197656287Z ==> Running build command 'npm install'...
+2025-04-28T01:52:12.107009902Z 
+2025-04-28T01:52:12.107035622Z added 438 packages, and audited 439 packages in 10s
+2025-04-28T01:52:12.107054952Z 
+2025-04-28T01:52:12.107073003Z 58 packages are looking for funding
+2025-04-28T01:52:12.107085643Z   run `npm fund` for details
+2025-04-28T01:52:12.11640085Z 
+2025-04-28T01:52:12.116416921Z 2 moderate severity vulnerabilities
+2025-04-28T01:52:12.116420941Z 
+2025-04-28T01:52:12.116425141Z To address all issues, run:
+2025-04-28T01:52:12.116428471Z   npm audit fix
+2025-04-28T01:52:12.116431591Z 
+2025-04-28T01:52:12.116434821Z Run `npm audit` for details.
+2025-04-28T01:52:22.471032534Z ==> Uploading build...
+2025-04-28T01:52:30.470297961Z ==> Uploaded in 5.3s. Compression took 2.7s
+2025-04-28T01:52:30.504320592Z ==> Build successful 🎉
+2025-04-28T01:52:33.059308455Z ==> Deploying...
+2025-04-28T01:52:52.09270614Z ==> Running 'node run.js'
+2025-04-28T01:52:52.296922056Z Starting the server...
+2025-04-28T01:53:11.055041339Z ==> Exited with status 1
+2025-04-28T01:53:11.121105083Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2025-04-28T01:53:08.988665719Z 
+2025-04-28T01:53:08.98869605Z node:internal/modules/run_main:122
+2025-04-28T01:53:08.98870235Z     triggerUncaughtException(
+2025-04-28T01:53:08.98870658Z     ^
+2025-04-28T01:53:08.988815463Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@vitejs/plugin-react' imported from /opt/render/project/src/vite.config.ts
+2025-04-28T01:53:08.988830323Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:268:9)
+2025-04-28T01:53:08.988868354Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-04-28T01:53:08.988875604Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-04-28T01:53:08.988879904Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T01:53:08.988884324Z     at nextResolve (node:internal/modules/esm/hooks:748:28)
+2025-04-28T01:53:08.988888874Z     at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805186784:2:3212)
+2025-04-28T01:53:08.988893515Z     at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805186784:2:3584)
+2025-04-28T01:53:08.988897684Z     at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805186784:2:4073)
+2025-04-28T01:53:08.988901905Z     at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805186784:2:4441)
+2025-04-28T01:53:08.988906485Z     at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+2025-04-28T01:53:08.988911375Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-04-28T01:53:08.988915925Z }
+2025-04-28T01:53:08.988919875Z 
+2025-04-28T01:53:08.988924345Z Node.js v22.14.0
+2025-04-28T01:53:09.585927204Z Server process exited with code 1
+2025-04-28T01:53:16.958242111Z ==> Running 'node run.js'
+2025-04-28T01:53:17.252273558Z Starting the server...
+2025-04-28T01:53:33.45230012Z 
+2025-04-28T01:53:33.452330171Z node:internal/modules/run_main:122
+2025-04-28T01:53:33.452335731Z     triggerUncaughtException(
+2025-04-28T01:53:33.452340071Z     ^
+2025-04-28T01:53:33.452483554Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@vitejs/plugin-react' imported from /opt/render/project/src/vite.config.ts
+2025-04-28T01:53:33.452496065Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:268:9)
+2025-04-28T01:53:33.452500035Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-04-28T01:53:33.452502835Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-04-28T01:53:33.452505885Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-28T01:53:33.452508665Z     at nextResolve (node:internal/modules/esm/hooks:748:28)
+2025-04-28T01:53:33.452511515Z     at resolveBase (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805211654:2:3212)
+2025-04-28T01:53:33.452514795Z     at resolveDirectory (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805211654:2:3584)
+2025-04-28T01:53:33.452517625Z     at resolveTsPaths (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805211654:2:4073)
+2025-04-28T01:53:33.452520455Z     at async resolve (file:///opt/render/.cache/_npx/fd45a72a545557e9/node_modules/tsx/dist/esm/index.mjs?1745805211654:2:4441)
+2025-04-28T01:53:33.452523615Z     at async nextResolve (node:internal/modules/esm/hooks:748:22) {
+2025-04-28T01:53:33.452526575Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-04-28T01:53:33.452529475Z }
+2025-04-28T01:53:33.452532185Z 
+2025-04-28T01:53:33.452535895Z Node.js v22.14.0
+2025-04-28T01:53:33.660240407Z Server process exited with code 1

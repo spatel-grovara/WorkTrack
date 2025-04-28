@@ -3,17 +3,18 @@
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { existsSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Run the server using tsx
-console.log('Starting the server...');
-const serverProc = spawn('npx', ['tsx', 'server/index.ts'], {
+// Use our production server file which doesn't rely on Vite
+console.log('Starting the production server...');
+const serverProc = spawn('node', ['server/production-server.js'], {
   stdio: 'inherit',
   env: {
     ...process.env,
-    NODE_ENV: process.env.NODE_ENV || 'production',
+    NODE_ENV: 'production',
     PORT: process.env.PORT || '5000'
   }
 });
