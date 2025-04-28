@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# Install dependencies including those needed for the build
+# Install dependencies
 npm install
-npm install @vitejs/plugin-react vite tailwindcss postcss autoprefixer esbuild --no-save
 
-# Run the build
-npm run build
+# Create a custom build step without relying on vite.config.ts
+echo "Building client..."
+npx vite build --config vite.config.js
 
-# Clean up node_modules to make deployment smaller
-# npm prune --production
+echo "Building server..."
+npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+echo "Build completed!"
