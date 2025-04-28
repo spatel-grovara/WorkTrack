@@ -375,14 +375,27 @@ app.get('/api/health', (req, res) => {
 const STATIC_PATHS = [
   path.join(__dirname, 'client/dist'),
   path.join(__dirname, 'public'),
-  path.join(__dirname, 'client/public')
+  path.join(__dirname, 'client/public'),
+  __dirname  // Include root for render-index-template.html
 ];
 
-// Check if directories exist and use them
+// Explicitly add styles path
+app.use('/styles', express.static(path.join(__dirname, 'client/dist/styles')));
+app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
+
+// Check if directories exist and use them with cache disabled
 for (const staticPath of STATIC_PATHS) {
   if (existsSync(staticPath)) {
     console.log(`Serving static files from: ${staticPath}`);
-    app.use(express.static(staticPath));
+    app.use(express.static(staticPath, {
+      etag: false,
+      lastModified: false,
+      setHeaders: (res) => {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+      }
+    }));
   }
 }
 
