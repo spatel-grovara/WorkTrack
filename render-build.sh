@@ -46,21 +46,7 @@ mkdir -p public
 cp -R client/dist/* public/
 
 # Create a production-ready index.html that includes proper styling
-cat > public/index.html <<EOL
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WorkTrack - Time Tracking App</title>
-    <link rel="stylesheet" href="/assets/index-DaUGtDKE.css" />
-    <script type="module" crossorigin src="/assets/index-CgKx52Zi.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
-EOL
+cp render-index-template.html public/index.html
 
 echo "Static assets setup complete"
 

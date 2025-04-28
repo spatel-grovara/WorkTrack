@@ -392,11 +392,20 @@ app.get('*', (req, res) => {
   for (const staticPath of STATIC_PATHS) {
     const indexPath = path.join(staticPath, 'index.html');
     if (existsSync(indexPath)) {
+      console.log(`Serving index.html from: ${indexPath}`);
       return res.sendFile(indexPath);
     }
   }
   
-  // Fallback - generate a basic HTML page
+  // Fallback - try to find the render-index-template.html
+  const customTemplatePath = path.join(__dirname, 'render-index-template.html');
+  if (existsSync(customTemplatePath)) {
+    console.log(`Serving from custom template: ${customTemplatePath}`);
+    return res.sendFile(customTemplatePath);
+  }
+  
+  // Fallback - generate a basic HTML page with inline styles
+  console.log('No index.html found, sending generated HTML');
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -405,17 +414,94 @@ app.get('*', (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WorkTrack - Time Tracking App</title>
         <style>
-          body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; }
-          .container { max-width: 600px; margin: 0 auto; padding: 2rem; }
-          h1 { color: #3b82f6; }
+          *, *::before, *::after { box-sizing: border-box; }
+          body { 
+            margin: 0; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            line-height: 1.5;
+            background-color: #f8f9fa;
+            color: #0f172a;
+          }
+          
+          :root {
+            --primary: #3b82f6;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --background: #ffffff;
+            --foreground: #0f172a;
+            --border: #e2e8f0;
+          }
+          
+          .layout { display: flex; flex-direction: column; min-height: 100vh; }
+          .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+          header { background-color: var(--background); border-bottom: 1px solid var(--border); padding: 1rem 0; }
+          .card { 
+            background-color: var(--background);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+          }
+          
+          /* Button styles */
+          .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+          
+          .button:hover { background-color: #2563eb; }
+          .success { color: #22c55e; }
+          .warning { color: #f59e0b; }
+          .danger { color: #ef4444; }
+          
+          h1, h2, h3 { margin-bottom: 1rem; }
+          p { margin-bottom: 1rem; }
         </style>
+        <script>
+          window.addEventListener('load', function() {
+            // Dynamic script loading
+            const scripts = ['/assets/index-CgKx52Zi.js', '/assets/index.es-ClsAZ7Qr.js'];
+            scripts.forEach(src => {
+              const script = document.createElement('script');
+              script.type = 'module';
+              script.src = src;
+              document.body.appendChild(script);
+            });
+            
+            // Dynamic CSS loading
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/assets/index-DaUGtDKE.css';
+            document.head.appendChild(link);
+          });
+        </script>
       </head>
       <body>
         <div id="root">
-          <div class="container">
-            <h1>WorkTrack</h1>
-            <p>The application is running, but the static assets couldn't be located.</p>
-            <p>Try redeploying the application.</p>
+          <div class="layout">
+            <header>
+              <div class="container">
+                <h1>WorkTrack</h1>
+              </div>
+            </header>
+            <main class="container" style="padding-top: 2rem;">
+              <div class="card">
+                <h2>Loading Application...</h2>
+                <p>If the application doesn't appear shortly, try refreshing the page.</p>
+                <p>The server is running correctly, but there might be an issue with loading assets.</p>
+              </div>
+            </main>
           </div>
         </div>
       </body>
