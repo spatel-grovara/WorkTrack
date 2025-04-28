@@ -8,9 +8,9 @@ import { existsSync } from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Use npx tsx to handle TypeScript files
-console.log('Starting the production server with tsx...');
-const serverProc = spawn('npx', ['tsx', 'server/index.ts'], {
+// Run our simple production server directly
+console.log('Starting the production server...');
+const serverProc = spawn('node', ['server-prod.js'], {
   stdio: 'inherit',
   env: {
     ...process.env,
