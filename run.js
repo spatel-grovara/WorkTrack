@@ -2,15 +2,16 @@
 
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 import { existsSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Run our simple production server directly
-console.log('Starting the production server...');
-const serverProc = spawn('node', ['server-prod.js'], {
+console.log('Starting the server in production mode...');
+// Instead of using server-prod.js, use the same server/index.ts we use in development
+// but set NODE_ENV to production
+const serverProc = spawn('tsx', ['server/index.ts'], {
   stdio: 'inherit',
   env: {
     ...process.env,
