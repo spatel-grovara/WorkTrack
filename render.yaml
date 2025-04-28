@@ -3,7 +3,7 @@ services:
     name: worktrack
     env: node
     buildCommand: chmod +x render-build.sh && ./render-build.sh
-    startCommand: node dist/server/index.js
+    startCommand: cd dist && node server/index.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

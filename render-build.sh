@@ -1,17 +1,33 @@
 #!/bin/bash
+set -e
 
-# Install root dependencies first
-echo "Installing root dependencies..."
+# Log each command for debugging
+set -x
+
+# Install dependencies
+echo "Installing dependencies..."
 npm install
 
-# Build client
-echo "Building client..."
-cd client
-npm run build
-cd ..
+# Create necessary directories
+mkdir -p dist/server
+mkdir -p dist/client
 
-# Compile TypeScript files
-echo "Compiling TypeScript..."
-npx tsc
+# Copy server files directly (no compilation/bundling)
+echo "Preparing server files..."
+cp -r server/* dist/server/
+cp -r shared dist/
 
-echo "Build process completed!"
+# Modify server files to use CommonJS
+find dist/server -name "*.ts" -exec sed -i 's/from "@shared/from "..\/shared/g' {} \;
+
+# Create simple server starter script
+cat > dist/server/index.js << 'EOF'
+require('tsx/dist/cli').main(['', '', 'dist/server/index.ts']);
+EOF
+
+# Prepare static client files
+echo "Preparing client files..."
+mkdir -p dist/client/assets
+cp client/index.html dist/client/
+
+echo "Build process completed successfully!"
