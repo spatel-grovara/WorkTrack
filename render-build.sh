@@ -45,8 +45,10 @@ echo "Setting up static assets..."
 mkdir -p public
 cp -R client/dist/* public/
 
-# Create a production-ready index.html that includes proper styling
-cp render-index-template.html public/index.html
+# Step 6: Apply all CSS styling fixes
+echo "Applying CSS and styling fixes..."
+chmod +x fix-styles.sh
+./fix-styles.sh
 
 echo "Static assets setup complete"
 
