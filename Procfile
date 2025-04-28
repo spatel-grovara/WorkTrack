@@ -1,2 +1,1 @@
-web: cd dist && node server/index.js
-
+web: node run.js
