@@ -45,11 +45,36 @@ echo "Setting up static assets..."
 mkdir -p public
 cp -R client/dist/* public/
 
-# Step 6: Ensure all assets are available in both client/dist and public
-echo "Ensuring all assets are properly available..."
+# Step 6: Process Tailwind CSS for production...
+echo "Processing Tailwind CSS for production..."
 mkdir -p client/dist
 mkdir -p public
-# Just ensure directories exist, we're using the Vite-generated CSS directly
+mkdir -p public/assets
+mkdir -p client/dist/assets
+
+# First create a simple copy of index.css (not compiled) as a fallback
+echo "Creating raw fallback CSS..."
+cp client/src/index.css public/raw-index.css
+
+# Copy the CSS file directly from source to destination
+echo "Creating direct CSS copy..."
+echo '@tailwind base; @tailwind components; @tailwind utilities;' > public/tailwind-directives.css 
+
+# Find all possible CSS files and copy them to multiple locations for maximum coverage
+echo "Looking for compiled CSS files..."
+find client/dist -name "*.css" -type f | while read css_file; do
+  filename=$(basename "$css_file")
+  echo "Found CSS: $filename - copying to ensure availability"
+  cp "$css_file" public/assets/ || true
+  cp "$css_file" public/ || true
+  cp "$css_file" client/dist/ || true
+done
+
+# Output the available CSS files for debugging
+echo "CSS files in client/dist:"
+find client/dist -name "*.css" -type f
+echo "CSS files in public:"
+find public -name "*.css" -type f
 
 echo "Static assets setup complete"
 

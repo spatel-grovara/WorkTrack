@@ -371,6 +371,67 @@ app.get('/api/health', (req, res) => {
   res.status(200).send('OK');
 });
 
+// Debug endpoint to locate assets (helpful for diagnosing styling issues)
+app.get('/api/debug/files', (req, res) => {
+  try {
+    const debugInfo = {
+      environment: process.env.NODE_ENV || 'unknown',
+      staticPaths: [],
+      cssFiles: []
+    };
+    
+    // Check all static paths
+    for (const staticPath of STATIC_PATHS) {
+      if (existsSync(staticPath)) {
+        const pathInfo = {
+          path: staticPath,
+          exists: true,
+          files: []
+        };
+        
+        // List files in the directory
+        const files = readdirSync(staticPath);
+        pathInfo.files = files;
+        debugInfo.staticPaths.push(pathInfo);
+        
+        // Check for assets subdirectory
+        const assetsPath = path.join(staticPath, 'assets');
+        if (existsSync(assetsPath)) {
+          const assetsInfo = {
+            path: assetsPath,
+            exists: true,
+            files: readdirSync(assetsPath)
+          };
+          debugInfo.staticPaths.push(assetsInfo);
+          
+          // Find CSS files
+          for (const file of assetsInfo.files) {
+            if (file.endsWith('.css')) {
+              debugInfo.cssFiles.push(path.join(assetsPath, file));
+            }
+          }
+        }
+        
+        // Also look for CSS files in the main directory
+        for (const file of files) {
+          if (file.endsWith('.css')) {
+            debugInfo.cssFiles.push(path.join(staticPath, file));
+          }
+        }
+      } else {
+        debugInfo.staticPaths.push({
+          path: staticPath,
+          exists: false
+        });
+      }
+    }
+    
+    res.json(debugInfo);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Static files - try multiple paths
 const STATIC_PATHS = [
   path.join(__dirname, 'client/dist'),
@@ -379,9 +440,66 @@ const STATIC_PATHS = [
   __dirname  // Include root for render-index-template.html
 ];
 
-// Explicitly add styles path
+// Explicitly add styles and assets paths
 app.use('/styles', express.static(path.join(__dirname, 'client/dist/styles')));
 app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
+app.use('/assets', express.static(path.join(__dirname, 'client/dist/assets')));
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+
+// Direct access to specific CSS files
+app.get('/index-B_1pzkcs.css', (req, res) => {
+  // Try to find the CSS file in various locations
+  const possiblePaths = [
+    path.join(__dirname, 'client/dist/assets/index-B_1pzkcs.css'),
+    path.join(__dirname, 'public/assets/index-B_1pzkcs.css'),
+    path.join(__dirname, 'client/dist/index-B_1pzkcs.css'),
+    path.join(__dirname, 'public/index-B_1pzkcs.css')
+  ];
+  
+  for (const filePath of possiblePaths) {
+    if (existsSync(filePath)) {
+      console.log(`Serving CSS from: ${filePath}`);
+      return res.sendFile(filePath);
+    }
+  }
+  
+  console.error('CSS file not found in any of the expected locations');
+  
+  // If we don't find the exact CSS file, look for any CSS file with a similar name pattern
+  let anyCssFile = null;
+  for (const staticPath of STATIC_PATHS) {
+    const assetsPath = path.join(staticPath, 'assets');
+    if (existsSync(assetsPath)) {
+      try {
+        const files = readdirSync(assetsPath);
+        for (const file of files) {
+          if (file.startsWith('index-') && file.endsWith('.css')) {
+            anyCssFile = path.join(assetsPath, file);
+            console.log(`Found alternative CSS file: ${anyCssFile}`);
+            break;
+          }
+        }
+      } catch (err) {
+        console.error(`Error reading directory ${assetsPath}:`, err);
+      }
+    }
+    
+    if (anyCssFile) break;
+  }
+  
+  if (anyCssFile) {
+    return res.sendFile(anyCssFile);
+  }
+  
+  // Final fallback to raw CSS
+  const rawCssPath = path.join(__dirname, 'public/raw-index.css');
+  if (existsSync(rawCssPath)) {
+    console.log('Falling back to raw CSS file');
+    return res.sendFile(rawCssPath);
+  }
+  
+  res.status(404).send('CSS file not found');
+});
 
 // Check if directories exist and use them with cache disabled
 for (const staticPath of STATIC_PATHS) {
@@ -426,8 +544,12 @@ app.get('*', (req, res) => {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WorkTrack - Time Tracking App</title>
-        <!-- Original app CSS -->
+        <!-- Multiple paths to find the CSS -->
         <link rel="stylesheet" href="/assets/index-B_1pzkcs.css" />
+        <link rel="stylesheet" href="/index-B_1pzkcs.css" />
+        <!-- Fallback CSS -->
+        <link rel="stylesheet" href="/raw-index.css" />
+        <link rel="stylesheet" href="/tailwind-directives.css" />
         <style>
           /* Base styles as fallback */
           *, *::before, *::after { box-sizing: border-box; }
@@ -472,16 +594,49 @@ app.get('*', (req, res) => {
         </style>
         <script>
           window.addEventListener('load', function() {
-            // No need to dynamically add CSS - we're using the correct stylesheet directly
+            // Dynamic CSS loading as a last resort
+            const styleElement = document.createElement('style');
+            styleElement.textContent = '@tailwind base; @tailwind components; @tailwind utilities;';
+            document.head.appendChild(styleElement);
             
-            // Check if the script is loaded
-            const scripts = ['/assets/index-CgKx52Zi.js'];
-            scripts.forEach(src => {
-              const script = document.createElement('script');
-              script.type = 'module';
-              script.src = src;
-              document.body.appendChild(script);
-            });
+            // Try to find any Vite-generated JS files in case the name changed
+            const assetsElement = document.createElement('div');
+            assetsElement.style.display = 'none';
+            assetsElement.className = 'assets-check';
+            document.body.appendChild(assetsElement);
+            
+            fetch('/api/debug/files')
+              .then(res => res.json())
+              .then(data => {
+                console.log('File debug info:', data);
+                // Attempt to load any potential JS files
+                if (data && data.staticPaths) {
+                  data.staticPaths.forEach(pathInfo => {
+                    if (pathInfo.files) {
+                      pathInfo.files.forEach(file => {
+                        if (file.endsWith('.js') && file.startsWith('index-')) {
+                          const script = document.createElement('script');
+                          script.type = 'module';
+                          script.src = '/assets/' + file;
+                          document.body.appendChild(script);
+                          console.log('Loading script:', file);
+                        }
+                      });
+                    }
+                  });
+                }
+              })
+              .catch(err => {
+                console.error('Error fetching asset info:', err);
+                // Fallback if debug endpoint fails
+                const scripts = ['/assets/index-CgKx52Zi.js'];
+                scripts.forEach(src => {
+                  const script = document.createElement('script');
+                  script.type = 'module';
+                  script.src = src;
+                  document.body.appendChild(script);
+                });
+              });
           });
         </script>
       </head>
