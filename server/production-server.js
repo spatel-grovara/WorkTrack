@@ -3,10 +3,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import http from 'http';
 import session from 'express-session';
-import { setupAuth } from './auth.js';
-import { mongoStorage } from './mongodb-storage.js';
-import { registerRoutes } from './mongodb-routes.js';
-import { connectToMongoDB } from './mongodb.js';
+import { setupAuth } from './auth.ts';
+import { mongoStorage } from './mongodb-storage.ts';
+import { registerRoutes } from './mongodb-routes.ts';
+import { connectToMongoDB } from './mongodb.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

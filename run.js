@@ -8,9 +8,9 @@ import { existsSync } from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Use our production server file which doesn't rely on Vite
-console.log('Starting the production server...');
-const serverProc = spawn('node', ['server/production-server.js'], {
+// Use npx tsx to handle TypeScript files
+console.log('Starting the production server with tsx...');
+const serverProc = spawn('npx', ['tsx', 'server/index.ts'], {
   stdio: 'inherit',
   env: {
     ...process.env,

@@ -5,6 +5,10 @@
 echo "Installing dependencies..."
 npm install --include=dev
 
+# Make sure tsx is installed globally for production
+echo "Installing tsx globally..."
+npm install -g tsx
+
 # Step 2: Build the client application
 echo "Building client application..."
 # Create a minimal package.json for the client
