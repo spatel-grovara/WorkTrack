@@ -1,0 +1,47 @@
+2025-04-29T16:17:26.386459474Z ==> It looks like we don't have access to your repo, but we'll try to clone it anyway.
+2025-04-29T16:17:26.386488875Z ==> Cloning from https://github.com/spatel-grovara/WorkTrack
+2025-04-29T16:17:26.778956954Z ==> Checking out commit 52db2c6003ad91c22ac87b7ae348a583febb8801 in branch main
+2025-04-29T16:17:36.099811258Z ==> Using Node.js version 22.14.0 (default)
+2025-04-29T16:17:36.125074011Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-04-29T16:17:38.228446847Z ==> Using Bun version 1.1.0 (default)
+2025-04-29T16:17:38.228462537Z ==> Docs on specifying a bun version: https://render.com/docs/bun-version
+2025-04-29T16:17:38.325301035Z ==> Running build command 'npm install && cd client && npm install && cd .. && npm run build'...
+2025-04-29T16:17:45.481320407Z 
+2025-04-29T16:17:45.481347658Z added 438 packages, and audited 439 packages in 7s
+2025-04-29T16:17:45.481357908Z 
+2025-04-29T16:17:45.481388339Z 58 packages are looking for funding
+2025-04-29T16:17:45.48140461Z   run `npm fund` for details
+2025-04-29T16:17:45.491983604Z 
+2025-04-29T16:17:45.491995714Z 2 moderate severity vulnerabilities
+2025-04-29T16:17:45.491999224Z 
+2025-04-29T16:17:45.492003194Z To address all issues, run:
+2025-04-29T16:17:45.492006734Z   npm audit fix
+2025-04-29T16:17:45.492009864Z 
+2025-04-29T16:17:45.492013155Z Run `npm audit` for details.
+2025-04-29T16:17:46.57515557Z 
+2025-04-29T16:17:46.57517967Z up to date, audited 439 packages in 964ms
+2025-04-29T16:17:46.575185431Z 
+2025-04-29T16:17:46.575198651Z 58 packages are looking for funding
+2025-04-29T16:17:46.575205081Z   run `npm fund` for details
+2025-04-29T16:17:46.589097517Z 
+2025-04-29T16:17:46.589119868Z 2 moderate severity vulnerabilities
+2025-04-29T16:17:46.589123728Z 
+2025-04-29T16:17:46.589127768Z To address all issues, run:
+2025-04-29T16:17:46.589131118Z   npm audit fix
+2025-04-29T16:17:46.589134278Z 
+2025-04-29T16:17:46.589137588Z Run `npm audit` for details.
+2025-04-29T16:17:46.693014206Z 
+2025-04-29T16:17:46.693036607Z > rest-express@1.0.0 build
+2025-04-29T16:17:46.693043957Z > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-04-29T16:17:46.693051147Z 
+2025-04-29T16:17:46.861254593Z vite v5.4.14 building for production...
+2025-04-29T16:17:46.894511048Z ✓ 0 modules transformed.
+2025-04-29T16:17:46.89601257Z x Build failed in 11ms
+2025-04-29T16:17:46.896068701Z error during build:
+2025-04-29T16:17:46.896075272Z Could not resolve entry module "index.html".
+2025-04-29T16:17:46.896079552Z     at getRollupError (file:///opt/render/project/src/node_modules/rollup/dist/es/shared/parseAst.js:396:41)
+2025-04-29T16:17:46.896082922Z     at error (file:///opt/render/project/src/node_modules/rollup/dist/es/shared/parseAst.js:392:42)
+2025-04-29T16:17:46.896086922Z     at ModuleLoader.loadEntryModule (file:///opt/render/project/src/node_modules/rollup/dist/es/shared/node-entry.js:20086:20)
+2025-04-29T16:17:46.896090252Z     at async Promise.all (index 0)
+2025-04-29T16:17:46.911936432Z ==> Build failed 😞
+2025-04-29T16:17:46.911962363Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
