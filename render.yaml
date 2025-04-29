@@ -1,9 +1,8 @@
-
 services:
   - type: web
     name: timetrack
     env: node
-    buildCommand: npm install && cd client && npm install && cd .. && npm run build
+    buildCommand: npm install && cd client && npm install @vitejs/plugin-react && vite build && cd .. && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
     startCommand: NODE_ENV=production node dist/index.js
     envVars:
       - key: NODE_ENV
