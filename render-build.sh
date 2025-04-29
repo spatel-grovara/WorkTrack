@@ -1,22 +1,17 @@
 #!/bin/bash
-# This script handles the build process for Render deployment
 
-# Step 1: Install dependencies for server and client
-echo "Installing dependencies..."
-npm install --include=dev
-
-# Make sure tsx is installed globally for production
-echo "Installing tsx globally..."
-npm install -g tsx
-
-# Step 2: Don't build the client - we'll use Vite in production mode
-echo "Preparing client..."
-# Make sure the client has all necessary dependencies
-cd client
+# Install root dependencies first
+echo "Installing root dependencies..."
 npm install
+
+# Build client
+echo "Building client..."
+cd client
+npm run build
 cd ..
 
-# Step 3: Set execute permissions for run.js
-chmod +x run.js
+# Compile TypeScript files
+echo "Compiling TypeScript..."
+npx tsc
 
-echo "Build preparation completed successfully!"
+echo "Build process completed!"

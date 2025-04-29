@@ -1,16 +1,13 @@
+
 services:
   - type: web
-    name: worktrack
+    name: timetrack
     env: node
-    buildCommand: bash ./render-build.sh
-    startCommand: node run.js
-    healthCheckPath: /api/health
+    buildCommand: npm install && cd client && npm install && cd .. && npm run build
+    startCommand: NODE_ENV=production node dist/index.js
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 5000
-      - key: SESSION_SECRET
+      - key: DATABASE_URL
         sync: false
-      - key: MONGODB_URI
-        sync: false
+    healthCheckPath: /api/health
