@@ -1,0 +1,58 @@
+2025-04-29T18:29:34.491373298Z ==> It looks like we don't have access to your repo, but we'll try to clone it anyway.
+2025-04-29T18:29:34.491402639Z ==> Cloning from https://github.com/spatel-grovara/WorkTrack
+2025-04-29T18:29:34.904377948Z ==> Checking out commit 34edc889b77d0124514c3774ff3f9722b1424a35 in branch main
+2025-04-29T18:29:36.55681607Z ==> Using Node.js version 22.14.0 (default)
+2025-04-29T18:29:36.589548397Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-04-29T18:29:38.436006617Z ==> Using Bun version 1.1.0 (default)
+2025-04-29T18:29:38.436022477Z ==> Docs on specifying a bun version: https://render.com/docs/bun-version
+2025-04-29T18:29:38.482681179Z ==> Running build command 'npm install && cd client && npm install && npm install @vitejs/plugin-react --save-dev && vite build && cd .. && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist'...
+2025-04-29T18:29:44.936782325Z 
+2025-04-29T18:29:44.936808215Z added 438 packages, and audited 439 packages in 6s
+2025-04-29T18:29:44.936820246Z 
+2025-04-29T18:29:44.936830526Z 58 packages are looking for funding
+2025-04-29T18:29:44.936834576Z   run `npm fund` for details
+2025-04-29T18:29:44.946176651Z 
+2025-04-29T18:29:44.946188321Z 2 moderate severity vulnerabilities
+2025-04-29T18:29:44.946192231Z 
+2025-04-29T18:29:44.946195941Z To address all issues, run:
+2025-04-29T18:29:44.946199681Z   npm audit fix
+2025-04-29T18:29:44.946202861Z 
+2025-04-29T18:29:44.946206261Z Run `npm audit` for details.
+2025-04-29T18:29:46.101997662Z 
+2025-04-29T18:29:46.102028603Z up to date, audited 439 packages in 1s
+2025-04-29T18:29:46.102032823Z 
+2025-04-29T18:29:46.102036423Z 58 packages are looking for funding
+2025-04-29T18:29:46.102048173Z   run `npm fund` for details
+2025-04-29T18:29:46.115645519Z 
+2025-04-29T18:29:46.115664529Z 2 moderate severity vulnerabilities
+2025-04-29T18:29:46.11566846Z 
+2025-04-29T18:29:46.11567294Z To address all issues, run:
+2025-04-29T18:29:46.11567624Z   npm audit fix
+2025-04-29T18:29:46.11567935Z 
+2025-04-29T18:29:46.11568263Z Run `npm audit` for details.
+2025-04-29T18:29:49.688872288Z 
+2025-04-29T18:29:49.688898239Z up to date, audited 439 packages in 4s
+2025-04-29T18:29:49.68892768Z 
+2025-04-29T18:29:49.68894222Z 58 packages are looking for funding
+2025-04-29T18:29:49.68894713Z   run `npm fund` for details
+2025-04-29T18:29:49.702268589Z 
+2025-04-29T18:29:49.702284799Z 2 moderate severity vulnerabilities
+2025-04-29T18:29:49.70228909Z 
+2025-04-29T18:29:49.70229362Z To address all issues, run:
+2025-04-29T18:29:49.70229729Z   npm audit fix
+2025-04-29T18:29:49.70230077Z 
+2025-04-29T18:29:49.70230469Z Run `npm audit` for details.
+2025-04-29T18:29:49.880098013Z failed to load config from /opt/render/project/src/client/vite.config.js
+2025-04-29T18:29:49.88037922Z error during build:
+2025-04-29T18:29:49.880387171Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@vitejs/plugin-react' imported from /opt/render/project/src/client/vite.config.js.timestamp-1745951389877-393296de20d8d.mjs
+2025-04-29T18:29:49.880391841Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:268:9)
+2025-04-29T18:29:49.880396031Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-04-29T18:29:49.880399481Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-04-29T18:29:49.880402821Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-04-29T18:29:49.880406871Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:685:12)
+2025-04-29T18:29:49.880410581Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:634:25)
+2025-04-29T18:29:49.880413881Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:617:38)
+2025-04-29T18:29:49.880428392Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:273:38)
+2025-04-29T18:29:49.880430672Z     at ModuleJob._link (node:internal/modules/esm/module_job:135:49)
+2025-04-29T18:29:49.891719697Z ==> Build failed 😞
+2025-04-29T18:29:49.891757478Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
