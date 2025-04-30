@@ -1,81 +1,84 @@
 import express, { type Request, Response, NextFunction } from "express";
+import session from "express-session";
+import path from "path";
 import { registerRoutes } from "./mongodb-routes";
+import { setupAuth } from "./auth";
+import { mongoStorage } from "./mongodb-storage";
 import { setupVite, serveStatic, log } from "./vite";
 import { connectToMongoDB } from "./mongodb";
-import path from "path";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Health check endpoint for Render
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
+app.get("/api/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
 });
 
+// Request logging middleware
 app.use((req, res, next) => {
   const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
+  const reqPath = req.path;
+  let capturedJson: Record<string, any> | undefined;
+  const originalJson = res.json;
+  res.json = function (body, ...args) {
+    capturedJson = body;
+    return originalJson.apply(res, [body, ...args]);
   };
-
   res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
+    if (reqPath.startsWith("/api")) {
+      let msg = `${req.method} ${reqPath} ${res.statusCode} in ${Date.now() - start}ms`;
+      if (capturedJson) msg += ` :: ${JSON.stringify(capturedJson)}`;
+      log(msg);
     }
   });
-
   next();
 });
 
 (async () => {
-  // Connect to MongoDB
   await connectToMongoDB();
-  
+
+  // Trust proxy for secure cookies (Render)
+  if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+  }
+
+  // Session middleware
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "dev-secret",
+      resave: false,
+      saveUninitialized: false,
+      store: mongoStorage.sessionStore,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        secure: process.env.NODE_ENV === "production",
+      },
+    })
+  );
+
+  // Passport auth setup
+  setupAuth(app);
+
+  // Register API routes
   const server = await registerRoutes(app);
 
+  // Error handler
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
+    res.status(status).json({ message: err.message || "Internal Server Error" });
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
+  // Dev vs Prod
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  const clientBuildPath = path.resolve(process.cwd(), "dist", "public");
-  app.use(express.static(clientBuildPath));
-  app.get("*", (_req, res) => {
-    res.sendFile(path.join(clientBuildPath, "index.html"));
-  });
-  
   const PORT = Number(process.env.PORT) || 5000;
   server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   });
-
 })();
