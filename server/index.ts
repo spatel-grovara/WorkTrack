@@ -67,18 +67,15 @@ app.use((req, res, next) => {
   }
 
   // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
- // after your routes and error handler…
-const port = Number(process.env.PORT) || 5000;
-// in production, serve the Vite build output:
-app.use(express.static(path.resolve(process.cwd(), "dist", "public")));
-app.get("*", (_req, res) => {
-  res.sendFile(path.resolve(process.cwd(), "dist", "public", "index.html"));
-});
-
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+  const clientBuildPath = path.resolve(process.cwd(), "dist", "public");
+  app.use(express.static(clientBuildPath));
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(clientBuildPath, "index.html"));
+  });
+  
+  const PORT = Number(process.env.PORT) || 5000;
+  server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
 
 })();

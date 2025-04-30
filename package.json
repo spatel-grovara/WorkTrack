@@ -4,12 +4,12 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev:client": "vite",
+    "dev:client": "cd client && vite",
     "dev:server": "NODE_ENV=development tsx server/index.ts",
-    "dev": "npm run dev:client & npm run dev:server",
+    "dev": "npm-run-all --parallel dev:client dev:server",
 
-    "build:client": "vite build",
-    "build:server": "esbuild server/index.ts --platform=node --bundle --external:dotenv --format=esm --outdir=dist",
+    "build:client": "cd client && vite build --outDir ../dist/public --emptyOutDir",
+    "build:server": "esbuild server/index.ts --platform=node --bundle --external:express --external:dotenv --format=esm --outdir dist",
     "build": "npm run build:client && npm run build:server",
 
     "start": "NODE_ENV=production node dist/index.js",
